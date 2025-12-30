@@ -11,7 +11,7 @@ Vehicles (Clients) → Roadside Base Stations (Edge) → Macro Cloud Server
 
 This architecture reflects real vehicular networks where vehicles communicate with nearby roadside units (RSUs), which then synchronize with a central cloud server.
 
-1. Motivation
+### Motivation
 
 Centralized Federated Learning (CFL) is inefficient in vehicular networks due to:
 
@@ -25,7 +25,7 @@ Highly dynamic vehicle mobility
 
 Hierarchical Federated Learning (HFL) introduces an edge layer between vehicles and the cloud. Instead of all vehicles sending updates directly to the cloud, vehicles communicate with nearby base stations, which perform local aggregation before forwarding results to the cloud. This reduces communication overhead, improves scalability, and better supports mobility.
 
-2. System Architecture
+### System Architecture
 
 The implemented HFL system contains three layers:
 
@@ -45,7 +45,7 @@ The experimental setup uses:
 
 Each base station serves 10 vehicles.
 
-3. Dataset
+### Dataset
 
 The CIFAR-10 dataset is used as the learning task.
 
@@ -66,93 +66,65 @@ https://www.cs.toronto.edu/~kriz/cifar.html
 
 Extract it into the data/ directory.
 
-4. Learning Model
+### Learning Model
 
 A lightweight CNN is used to reflect realistic on-vehicle computation:
-
-Two convolutional layers with ReLU
-
-Max-pooling
-
-Fully connected layer
-
-Softmax output
+- Two convolutional layers with ReLU
+- Max-pooling
+- Fully connected layer
+- Softmax output
 
 Training settings:
-
-Optimizer: Stochastic Gradient Descent (SGD)
-
-Learning rate: 0.01
-
-Loss: Sparse categorical cross-entropy
+- Optimizer: Stochastic Gradient Descent (SGD)
+- Learning rate: 0.01
+- Loss: Sparse categorical cross-entropy
 
 This simple model is chosen to emphasize federated learning behavior, not raw classification performance.
 
-5. Hierarchical Training Process
+### Hierarchical Training Process
 
 Each HFL round follows four steps:
 
-Step 1 — Local Training (Vehicles)
-
+**Step 1 — Local Training (Vehicles)**
 Each vehicle trains its model for one local epoch using its private data.
 
-Step 2 — Edge Aggregation (Base Stations)
-
+**Step 2 — Edge Aggregation (Base Stations)**
 Each base station aggregates the models from its 10 vehicles using data-size-weighted averaging, producing an edge-level model.
 
-Step 3 — Cloud Aggregation
-
+**Step 3 — Cloud Aggregation**
 The cloud aggregates the 5 base-station models into a global model using weighted averaging.
 
-Step 4 — Model Distribution
-
+**Step 4 — Model Distribution**
 The global model is sent back to all base stations and then to all vehicles for the next round.
-
 This two-stage aggregation implements the full Hierarchical Federated Learning pipeline.
 
-6. Experimental Results
+### Experimental Results
 
 The system is run for multiple HFL rounds. After each round, the global model is evaluated on the CIFAR-10 test set.
-
 The results show:
-
-Test accuracy increases steadily
-
-Test loss decreases monotonically
-
-Training remains stable
-
+- Test accuracy increases steadily
+- Test loss decreases monotonically
+- Training remains stable
 This confirms that hierarchical aggregation correctly propagates local learning progress and enables convergence.
 
-7. Scope of This Implementation
+### Scope of This Implementation
 
 This repository implements a baseline HFL system:
-
-All vehicles participate every round
-
-Data is IID
-
-No mobility, scheduling, or resource optimization
-
-No partial participation
-
+- All vehicles participate every round
+- Data is IID
+- No mobility, scheduling, or resource optimization
+- No partial participation
 The goal is to provide a clean reference implementation for validating hierarchical federated learning.
 
-8. Future Extensions
+### Future Extensions
 
-This codebase can be extended to support:
-
-Non-IID data distributions
-
-Partial and dynamic vehicle participation
-
-Mobility-aware base station association
-
-Communication-aware scheduling
-
-Reinforcement-learning-based resource allocation
-
-Comparison with fully decentralized FL
+- This codebase can be extended to support:
+- Non-IID data distributions
+- Partial and dynamic vehicle participation
+- Mobility-aware base station association
+- Communication-aware scheduling
+- Reinforcement-learning-based resource allocation
+- Comparison with fully decentralized FL
 
 
 
