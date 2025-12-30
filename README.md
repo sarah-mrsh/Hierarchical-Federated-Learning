@@ -110,8 +110,3 @@ The goal is to provide a clean reference implementation for validating hierarchi
 - Communication-aware scheduling
 - Reinforcement-learning-based resource allocation
 - Comparison with fully decentralized FL
-
-
-
-Download CIFAR-10 from: https://www.cs.toronto.edu/~kriz/cifar.html
-Extract to: data/
