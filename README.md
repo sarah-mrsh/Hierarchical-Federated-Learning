@@ -3,11 +3,9 @@
 ## Baseline Implementation and Evaluation
 
 This repository provides a Python/TensorFlow implementation of Hierarchical Federated Learning (HFL) for vehicular networks. The purpose of this project is to validate the hierarchical federated learning workflow in a realistic vehicular setting, rather than to achieve state-of-the-art image classification accuracy.
-
 The system models a three-layer V2X learning architecture:
 
 Vehicles (Clients) → Roadside Base Stations (Edge) → Macro Cloud Server
-
 
 This architecture reflects real vehicular networks where vehicles communicate with nearby roadside units (RSUs), which then synchronize with a central cloud server.
 
@@ -15,56 +13,43 @@ This architecture reflects real vehicular networks where vehicles communicate wi
 
 Centralized Federated Learning (CFL) is inefficient in vehicular networks due to:
 
-High communication latency
-
-Cloud bottlenecks
-
-Single points of failure
-
-Highly dynamic vehicle mobility
+- High communication latency
+- Cloud bottlenecks
+- Single points of failure
+- Highly dynamic vehicle mobility
 
 Hierarchical Federated Learning (HFL) introduces an edge layer between vehicles and the cloud. Instead of all vehicles sending updates directly to the cloud, vehicles communicate with nearby base stations, which perform local aggregation before forwarding results to the cloud. This reduces communication overhead, improves scalability, and better supports mobility.
 
 ### System Architecture
 
 The implemented HFL system contains three layers:
-
-Vehicles (Clients): Train local neural networks using private data
-
-Roadside Base Stations (Edge Servers): Aggregate vehicle models
-
-Macro Cloud Server: Aggregates base-station models into a global model
+- Vehicles (Clients): Train local neural networks using private data
+- Roadside Base Stations (Edge Servers): Aggregate vehicle models
+- Macro Cloud Server: Aggregates base-station models into a global model
 
 The experimental setup uses:
-
-50 vehicles
-
-5 base stations
-
-1 macro-level cloud server
+- 50 vehicles
+- 5 base stations
+- 1 macro-level cloud server
 
 Each base station serves 10 vehicles.
 
 ### Dataset
 
 The CIFAR-10 dataset is used as the learning task.
-
-60,000 images (32×32, 10 classes)
-
-50,000 training samples
-
-10,000 test samples
+- 60,000 images (32×32, 10 classes)
+- 50,000 training samples
+- 10,000 test samples
 
 The training data is split IID across 50 vehicles (≈1000 samples per vehicle).
 The test set remains centralized at the cloud and is only used for evaluation.
 
 The dataset is not stored in this repository.
-Download CIFAR-10 from:
+**Download CIFAR-10 from:**
 
 https://www.cs.toronto.edu/~kriz/cifar.html
 
-
-Extract it into the data/ directory.
+**Extract it into the data/ directory.**
 
 ### Learning Model
 
